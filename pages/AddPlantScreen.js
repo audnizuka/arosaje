@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
+import { Cloudinary } from "@cloudinary/url-gen";
 
 const AjouterPlanteScreen = ({ navigation }) => {
   // États pour stocker les détails de la nouvelle plante
@@ -13,6 +15,27 @@ const AjouterPlanteScreen = ({ navigation }) => {
     // Ensuite, naviguez vers l'écran "Mon Jardin"
     navigation.navigate('Mon Jardin');
   };
+
+  const [publicId, setPublicId] = useState("");
+  const [cloudName] = useState("dybmmr8ah");
+  const [uploadPreset] = useState("arosaje");
+
+
+  const [uwConfig] = useState({
+    cloudName,
+    uploadPreset,
+    folder: "arosaje",
+  });
+
+  // Create a Cloudinary instance and set your cloud name.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName
+    }
+  });
+
+  const myImage = cld.image(publicId);
+
 
   return (
     <View style={styles.container}>
@@ -35,6 +58,8 @@ const AjouterPlanteScreen = ({ navigation }) => {
         value={besoinsEau}
         onChangeText={setBesoinsEau}
       />
+
+
       <TouchableOpacity style={styles.addButton} onPress={handleSubmit}>
         <Text style={styles.addButtonText}>Ajouter Plante</Text>
       </TouchableOpacity>
