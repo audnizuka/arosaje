@@ -5,20 +5,16 @@ const GalleriePage = () => {
   const [imageUrls, setImageUrls] = useState([]);
 
   useEffect(() => {
-    const cloudName = 'dybmmr8ah'; // Votre cloud name Cloudinary
-    const url = `https://api.cloudinary.com/v1_1/${cloudName}/resources/image/upload/arosaje`;
+//URL de test pour la gallerie
+//Après switch Fast API https://cloudinary.com/documentation/advanced_url_delivery_options
 
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Basic ' + btoa('413313137164619:imzXlfqV06AkO5GCj5I5BPtHSNA'), 
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setImageUrls(data.resources.map(resource => resource.secure_url));
-      })
-      .catch(error => console.error('Erreur lors de la récupération des images:', error));
+    const urls = [
+      "https://res.cloudinary.com/dybmmr8ah/image/upload/v1708891601/arosaje/zxszcefxd3lx25ki16rq.jpg",
+      "https://res.cloudinary.com/dybmmr8ah/image/upload/v1708891577/arosaje/pn2xgn0zcxh0tugorsrl.jpg",
+      "https://res.cloudinary.com/dybmmr8ah/image/upload/v1708880106/arosaje/nou4wfigbpf7muonn1qh.jpg"
+    ];
+
+    setImageUrls(urls);
   }, []);
 
   return (

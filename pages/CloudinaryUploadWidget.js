@@ -5,6 +5,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 const CloudinaryScriptContext = createContext();
 
 function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
+  
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {

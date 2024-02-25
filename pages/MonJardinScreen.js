@@ -84,12 +84,33 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
 import { Cloudinary } from "@cloudinary/url-gen";
 
+
 const AddPlantScreen = ({ navigation }) => {
   const [plantName, setPlantName] = useState('');
   const [plantType, setPlantType] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
-  const [publicId, setPublicId] = useState(''); // État pour stocker l'ID public de l'image téléchargée
+  const [publicId, setPublicId] = useState(''); 
+
+
+  const [cloudName] = useState("dybmmr8ah");
+  const [uploadPreset] = useState("arosaje");
+
+
+  const [uwConfig] = useState({
+    cloudName,
+    uploadPreset,
+    folder: "arosaje",
+  });
+
+  // Create a Cloudinary instance and set your cloud name.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName
+    }
+  });
+
+  const myImage = cld.image(publicId);// État pour stocker l'ID public de l'image téléchargée
 
   const handleAddPlant = () => {
     // Logique pour ajouter une plante
@@ -131,7 +152,7 @@ const AddPlantScreen = ({ navigation }) => {
       />
       {/* CloudinaryUploadWidget pour télécharger l'image */}
       <CloudinaryUploadWidget 
-        uwConfig={{ cloudName: 'VotreCloudName', uploadPreset: 'VotreUploadPreset' }}
+        uwConfig={uwConfig} 
         setPublicId={setPublicId}
       />
       <TouchableOpacity style={styles.addButton} onPress={handleAddPlant}>
