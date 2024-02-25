@@ -28,6 +28,7 @@ const App = () => {
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{title : 'Mot de passe oublié'}}/>
         <Stack.Screen name="MonJardinScreen" component= {MonJardinScreen} options= {{title: 'Mon jardin'}}/>
         <Stack.Screen name="GalleriePage" component= {GalleriePage} options= {{title: 'Gallerie'}}/>
+        <Stack.Screen name="Map" component= {Map} options= {{title: 'Carte des Plantes'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

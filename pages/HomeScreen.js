@@ -19,6 +19,9 @@ const HomeScreen = ({ navigation }) => {
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('GalleriePage')}>
           <Text style={styles.buttonText}>Gallerie</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Map')}>
+          <Text style={styles.buttonText}>Carte des Plantes</Text>
+        </TouchableOpacity>
       </View>
       
     </ImageBackground>
