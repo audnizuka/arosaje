@@ -1,17 +1,23 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import {Cloudinary} from "@cloudinary/url-gen";
 import HomeScreen from './pages/HomeScreen.js';
 import AddPlantScreen from './pages/AddPlantScreen.js';
 import LoginScreen from './pages/Login.js';
 import SignUpScreen from './pages/SignUpScreen.js';
 import ForgotPasswordScreen from './pages/ForgotPasswordScreen.js';
 import MonJardinScreen from './pages/MonJardinScreen.js';
+import GallerieScreen from './pages/GalleriePage.js';
+import GalleriePage from './pages/GalleriePage.js';
 
 
 const Stack = createStackNavigator();
 
 const App = () => {
+
+
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -21,7 +27,8 @@ const App = () => {
         <Stack.Screen name="SignUp" component={SignUpScreen} options={{title: 'Inscription'}}/> 
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{title : 'Mot de passe oublié'}}/>
         <Stack.Screen name="MonJardinScreen" component= {MonJardinScreen} options= {{title: 'Mon jardin'}}/>
-       </Stack.Navigator>
+        <Stack.Screen name="GalleriePage" component= {GalleriePage} options= {{title: 'Gallerie'}}/>
+      </Stack.Navigator>
     </NavigationContainer>
   );
   

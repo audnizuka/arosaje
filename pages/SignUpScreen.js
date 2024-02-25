@@ -69,7 +69,7 @@ const SignUp= ({ navigation }) => {   const [pseudo, setPseudo] = useState('');
           <Picker.Item label="Non précisé" value="Non précisé" />
         </Picker>
       </View>
-     
+    
       <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
         <Text style={styles.signUpButtonText}>S'inscrire</Text>
       </TouchableOpacity>
