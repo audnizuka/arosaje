@@ -2,6 +2,7 @@
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 
 
+
 const MonJardinScreen = ({ navigation }) => {
   // Supposons que vous avez une liste de plantes dans cet état
   const [plantes, setPlantes] = React.useState([]);
@@ -77,15 +78,39 @@ const styles = StyleSheet.create({
 
 export default MonJardinScreen;
 */
+
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Picker, Switch } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
+import { Cloudinary } from "@cloudinary/url-gen";
+
 
 const AddPlantScreen = ({ navigation }) => {
   const [plantName, setPlantName] = useState('');
   const [plantType, setPlantType] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
-  const [isBotanist, setIsBotanist] = useState(false); // Etat pour indiquer si l'utilisateur est botaniste
+  const [publicId, setPublicId] = useState(''); 
+
+
+  const [cloudName] = useState("dybmmr8ah");
+  const [uploadPreset] = useState("arosaje");
+
+
+  const [uwConfig] = useState({
+    cloudName,
+    uploadPreset,
+    folder: "arosaje",
+  });
+
+  // Create a Cloudinary instance and set your cloud name.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName
+    }
+  });
+
+  const myImage = cld.image(publicId);// État pour stocker l'ID public de l'image téléchargée
 
   const handleAddPlant = () => {
     // Logique pour ajouter une plante
@@ -93,7 +118,7 @@ const AddPlantScreen = ({ navigation }) => {
     console.log('Type de plante:', plantType);
     console.log('Localisation:', location);
     console.log('Description:', description);
-    console.log('Est botaniste:', isBotanist);
+    console.log('ID de l\'image téléchargée:', publicId); // Affiche l'ID public de l'image téléchargée
   };
 
   return (
@@ -125,7 +150,11 @@ const AddPlantScreen = ({ navigation }) => {
         value={description}
         onChangeText={setDescription}
       />
-      
+      {/* CloudinaryUploadWidget pour télécharger l'image */}
+      <CloudinaryUploadWidget 
+        uwConfig={uwConfig} 
+        setPublicId={setPublicId}
+      />
       <TouchableOpacity style={styles.addButton} onPress={handleAddPlant}>
         <Text style={styles.addButtonText}>Ajouter la plante</Text>
       </TouchableOpacity>
@@ -155,7 +184,6 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
   },
-  
   addButton: {
     backgroundColor: '#00a65a',
     borderRadius: 5,
