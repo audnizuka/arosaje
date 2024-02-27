@@ -1,29 +1,38 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Linking } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+import styles from "../assets/style";
+import {Buffer} from "buffer";
 
 const LoginScreen = ({ navigation }) => {
+  const [isLoading, setLoading] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    fetch('http://192.168.1.65:3000/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        login: email,
-        password: password
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://192.168.1.65:3000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          login: email,
+          password: password
+        }),
       })
-      .catch((error) => {
-        console.error(error);
-      })
-  };
+      const data = await response.json();
+      await SecureStore.setItemAsync('token', data.token);
+      const parts = data.token.split('.').map(part => Buffer.from(part.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString());
+      const payload = JSON.parse(parts[1]);
+      await SecureStore.setItemAsync('userId', payload.id.toString());
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error(error);
+    } finally {
+        setLoading(false);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -55,67 +64,6 @@ const LoginScreen = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    resizeMode: 'cover',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff', // Changer la couleur de fond au besoin
-  },
-  formContainer: {
-    width: '80%',
-    alignItems: 'center',
-  },
-  logo: {
-    width: 150, // Ajuster la taille du logo au besoin
-    height: 150, // Ajuster la taille du logo au besoin
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 34,
-    color: '#000', // Couleur du texte
-    marginBottom: 20,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  input: {
-    width: '100%',
-    borderWidth: 1,
-    borderColor: '#ccc', // Couleur de la bordure
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-  },
-  forgotPassword: {
-    textAlign: 'right',
-    marginBottom: 10,
-    color: '#007bff', // Couleur du lien "Mot de passe oublié ?"
-  },
-  button: {
-    
-    backgroundColor: '#00a65a',
-    borderRadius: 5,
-    padding: 10,
-    width: '80%',
-    marginBottom: 10,
-    opacity: 0.55,
-  },
-  buttonText: {
-    color: '#ffffff',
-  textAlign: 'center',
-  fontWeight: 'bold',
-  },
-  signUpLink: {
-    color: '#007bff', // Couleur du lien "Pas encore inscrit ? S'inscrire"
-    textAlign: 'center',
-    marginTop: 10,
-  },
-});
 export default LoginScreen; 
 
 

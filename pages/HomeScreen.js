@@ -1,17 +1,13 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
- 
 
 const HomeScreen = ({ navigation }) => {
   return (
     <ImageBackground source={require('../images/plante.jpg')} style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.title}>Bienvenue sur Arosa-je</Text>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('LoginScreen')}>
-          <Text style={styles.buttonText}>Se Connecter</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignUp')}>
-          <Text style={styles.buttonText}>S'Inscrire</Text>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Profil')}>
+          <Text style={styles.buttonText}>Profil</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MonJardinScreen')}>
           <Text style={styles.buttonText}>Accéder à Mon Jardin</Text>
