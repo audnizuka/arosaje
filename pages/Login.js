@@ -1,20 +1,28 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Linking } from 'react-native';
-import bcrypt from "react-native-bcrypt";
-import isaac from "isaac";
-
-bcrypt.setRandomFallback((len) => {
-  const buf = new Uint8Array(len);
-  return buf.map(() => Math.floor(isaac.random() * 256));
-});
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    const hashedPassword = bcrypt.hashSync(password, 10);
-    console.log(email, password, hashedPassword);
+    fetch('http://192.168.1.65:3000/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        login: email,
+        password: password
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
   };
 
   return (
@@ -47,6 +55,7 @@ const LoginScreen = ({ navigation }) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   background: {
     flex: 1,
