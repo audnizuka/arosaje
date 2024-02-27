@@ -119,7 +119,9 @@ const AccueilScreen = ({ navigation }) => {
       </TouchableOpacity>
       <View style={styles.plantThumbnails}>
         {/* Miniatures des plantes récemment ajoutées ou gardées */
-        {/* Vous pouvez remplacer cette partie par vos propres composants */}
+        import {checkAuth} from "../lib/utilFunctions";
+
+{/* Vous pouvez remplacer cette partie par vos propres composants */}
       /*  <Text style={styles.thumbnailText}>Miniatures des plantes</Text>
         <Text style={styles.thumbnailText}>récemment ajoutées ou gardées</Text>
       </View>
@@ -194,6 +196,7 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native
 //import { plantsData } from '../data/plantsData'; // Supposons que vous avez des données de plantes à afficher
 
 const DashboardScreen = ({ navigation }) => {
+  checkAuth({ navigation });
   const [plants, setPlants] = useState(plantsData); // Supposons que plantsData est un tableau de plantes
 
   const renderPlantItem = ({ item }) => (

@@ -11,14 +11,12 @@ import MonJardinScreen from './pages/MonJardinScreen.js';
 import GallerieScreen from './pages/GalleriePage.js';
 import GalleriePage from './pages/GalleriePage.js';
 import Profil from "./pages/Profil";
-
+import * as SecureStore from "expo-secure-store";
+import {checkAuth, tokenIsValid} from "./lib/utilFunctions";
 
 const Stack = createStackNavigator();
 
-const App = () => {
-
-
-
+const App = ({ navigation }) => {
   return (
     <NavigationContainer>
       <Stack.Navigator>

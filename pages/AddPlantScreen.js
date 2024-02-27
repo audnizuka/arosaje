@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
 import { Cloudinary } from "@cloudinary/url-gen";
+import {checkAuth} from "../lib/utilFunctions";
 
 const AjouterPlanteScreen = ({ navigation }) => {
+  checkAuth({ navigation });
   // États pour stocker les détails de la nouvelle plante
   const [nomPlante, setNomPlante] = useState('');
   const [typePlante, setTypePlante] = useState('');

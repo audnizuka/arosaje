@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, ScrollView, StyleSheet } from 'react-native';
+import {checkAuth} from "../lib/utilFunctions";
 
 const GalleriePage = () => {
+  checkAuth({ navigation });
   const [imageUrls, setImageUrls] = useState([]);
 
   useEffect(() => {

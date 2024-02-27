@@ -83,9 +83,11 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
 import { Cloudinary } from "@cloudinary/url-gen";
+import {checkAuth} from "../lib/utilFunctions";
 
 
 const AddPlantScreen = ({ navigation }) => {
+  checkAuth({ navigation });
   const [plantName, setPlantName] = useState('');
   const [plantType, setPlantType] = useState('');
   const [location, setLocation] = useState('');

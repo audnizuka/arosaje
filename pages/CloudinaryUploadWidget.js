@@ -1,11 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import {checkAuth} from "../lib/utilFunctions";
 
 // Create a context to manage the script loading state
 const CloudinaryScriptContext = createContext();
 
 function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
-  
+  checkAuth({ navigation });
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {

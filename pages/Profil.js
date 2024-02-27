@@ -12,8 +12,10 @@ import {
 } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import styles from "../assets/style";
+import {checkAuth} from "../lib/utilFunctions";
 
 const Profil = ({ navigation }) => {
+    checkAuth({ navigation });
     const [isLoading, setLoading] = useState(true);
     const [userData, setUserData] = useState({});
     const getUserData = async () => {

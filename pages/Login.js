@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Linking } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import styles from "../assets/style";
-import {Buffer} from "buffer";
+import {decodeToken, checkAuthOnStart} from "../lib/utilFunctions";
+
 
 const LoginScreen = ({ navigation }) => {
+  checkAuthOnStart({ navigation });
   const [isLoading, setLoading] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,8 +25,7 @@ const LoginScreen = ({ navigation }) => {
       })
       const data = await response.json();
       await SecureStore.setItemAsync('token', data.token);
-      const parts = data.token.split('.').map(part => Buffer.from(part.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString());
-      const payload = JSON.parse(parts[1]);
+      const payload = decodeToken(data.token);
       await SecureStore.setItemAsync('userId', payload.id.toString());
       navigation.navigate('Home');
     } catch (error) {
