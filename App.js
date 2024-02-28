@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {Cloudinary} from "@cloudinary/url-gen";
@@ -11,19 +11,17 @@ import MonJardinScreen from './pages/MonJardinScreen.js';
 import GallerieScreen from './pages/GalleriePage.js';
 import GalleriePage from './pages/GalleriePage.js';
 import Profil from "./pages/Profil";
-import * as SecureStore from "expo-secure-store";
-import {checkAuth, tokenIsValid} from "./lib/utilFunctions";
 
 const Stack = createStackNavigator();
 
-const App = ({ navigation }) => {
+const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{title: 'log in' } }/>
         <Stack.Screen name="Home" component={HomeScreen} options= {{headerShown: false}} />
-        <Stack.Screen name="AddPlant" component={AddPlantScreen} options={{ title: 'Ajouter une Plante' }} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{title: 'log in' } }/>
         <Stack.Screen name="SignUp" component={SignUpScreen} options={{title: 'Inscription'}}/>
+        <Stack.Screen name="AddPlant" component={AddPlantScreen} options={{ title: 'Ajouter une Plante' }} />
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{title : 'Mot de passe oublié'}}/>
         <Stack.Screen name="MonJardinScreen" component= {MonJardinScreen} options= {{title: 'Mon jardin'}}/>
         <Stack.Screen name="GalleriePage" component= {GalleriePage} options= {{title: 'Gallerie'}}/>
@@ -32,6 +30,5 @@ const App = ({ navigation }) => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-  
 };
 export default App;

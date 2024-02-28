@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
-import {checkAuth} from "../lib/utilFunctions";
 
 const HomeScreen = ({ navigation }) => {
-  checkAuth({ navigation });
   return (
     <ImageBackground source={require('../images/plante.jpg')} style={styles.background}>
       <View style={styles.container}>

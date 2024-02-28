@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Picker, Switch } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch } from 'react-native';
+import {Picker} from "@react-native-picker/picker";
+import {createUser, fetchGenders} from "../lib/fetch/user";
+import {capitalize} from "../lib/utilFunctions";
 
 const SignUp = ({ navigation }) => {
+  const [isLoading, setLoading] = useState(true);
   const [pseudo, setPseudo] = useState('');
   const [mail, setEmail] = useState('');
   const [ville, setVille] = useState('');
@@ -10,20 +14,33 @@ const SignUp = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isBotanist, setIsBotanist] = useState(false); // Nouvel état pour indiquer si l'utilisateur est botaniste
-  const [gender, setGender] = useState('Non précisé');
+  const [gender, setGender] = useState(1);
+  const [genders, setGenders] = useState([]);
 
-  const handleSignUp = () => {
-    // Logique pour traiter l'inscription de l'utilisateur
-    console.log('Pseudo:', pseudo);
-    console.log('Email:', mail);
-    console.log('Ville:', ville);
-    console.log('Code Postal:', code_postal);
-    console.log('Adresse:', rue);
-    console.log('Mot de passe:', password);
-    console.log('Confirmer le nouveau mot de passe:', confirmPassword);
-    console.log('Est botaniste:', isBotanist);
-    console.log('Genre:', gender);
+  const getGenders = async () => {
+    try {
+      const data = await fetchGenders();
+      setGenders(data);
+    } catch (e) {
+      console.log(e)
+    } finally {
+        setLoading(false);
+    }
   };
+
+  const handleSignUp = async () => {
+    const response= await createUser(pseudo, mail, password, rue, ville, code_postal, gender, isBotanist)
+    if (response.status !== 200) {
+      const data = await response.json();
+      alert(data.message)
+      return;
+    }
+    navigation.navigate('LoginScreen')
+  };
+
+  useEffect(() => {
+    getGenders();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -42,26 +59,26 @@ const SignUp = ({ navigation }) => {
         value={mail}
         onChangeText={setEmail}
       />
-            <TextInput
+      <TextInput
+          style={styles.input}
+          placeholder="Adresse"
+          autoCapitalize="none"
+          value={rue}
+          onChangeText={setRue}
+      />
+      <TextInput
         style={styles.input}
         placeholder="Ville"
         autoCapitalize="none"
         value={ville}
         onChangeText={setVille}
       />
-            <TextInput
+      <TextInput
         style={styles.input}
         placeholder="Code Postal"
         autoCapitalize="none"
         value={code_postal}
         onChangeText={setCode_postal}
-      />
-            <TextInput
-        style={styles.input}
-        placeholder="Adresse"
-        autoCapitalize="none"
-        value={rue}
-        onChangeText={setRue}
       />
       <TextInput
         style={styles.input}
@@ -77,17 +94,21 @@ const SignUp = ({ navigation }) => {
         value={confirmPassword}
         onChangeText={setConfirmPassword}
       />
-      <View style={styles.pickerContainer}>
-        <Text style={styles.pickerLabel}>Genre:</Text>
-        <Picker
-          style={styles.picker}
-          selectedValue={gender}
-          onValueChange={(itemValue, itemIndex) => setGender(itemValue)}>
-          <Picker.Item label="Homme" value="Homme" />
-          <Picker.Item label="Femme" value="Femme" />
-          <Picker.Item label="Non précisé" value="Non précisé" />
-        </Picker>
-      </View>
+      {isLoading ? (
+        <Text>Chargement des genres...</Text>
+      ) : (
+            <View style={styles.pickerContainer}>
+              <Text style={styles.pickerLabel}>Genre:</Text>
+              <Picker
+                style={styles.picker}
+                selectedValue={gender}
+                onValueChange={(itemValue, itemIndex) => setGender(itemValue)}>
+                {genders.map((gender, index) => (
+                    <Picker.Item key={index} label={capitalize(gender.sexe)} value={gender.id} />
+                ))}
+              </Picker>
+            </View>
+      )}
       <View style={styles.switchContainer}>
         <Text style={styles.switchLabel}>Êtes-vous botaniste ?</Text>
         <Switch
