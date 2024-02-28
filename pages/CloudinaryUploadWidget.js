@@ -50,14 +50,14 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
 
   return (
     <CloudinaryScriptContext.Provider value={{ loaded }}>
-      <button
+      <TouchableOpacity
       style={styles.addButton}
         id="upload_widget"
         className="cloudinary-button"
         onClick={initializeCloudinaryWidget}
-      ><p style={styles.addButtonText}>Ajouter une image</p>
+      ><Text style={styles.addButtonText}>Ajouter une image</Text>
         
-      </button>
+      </TouchableOpacity>
     </CloudinaryScriptContext.Provider>
   );
 }

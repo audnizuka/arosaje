@@ -1,7 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ route, navigation }) => {
+  if (route.params) {
+    alert(route.params.message)
+  }
   return (
     <ImageBackground source={require('../images/plante.jpg')} style={styles.background}>
       <View style={styles.container}>
@@ -17,6 +20,12 @@ const HomeScreen = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Map')}>
           <Text style={styles.buttonText}>Carte des Plantes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('LoginScreen')}>
+          <Text style={styles.buttonText}>Se connecter</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignUp')}>
+          <Text style={styles.buttonText}>S'inscrire</Text>
         </TouchableOpacity>
       </View>
       
