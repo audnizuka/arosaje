@@ -31,7 +31,6 @@ const Profil = ({ navigation }) => {
 
     useEffect(() => {
         fetchData();
-        console.log(announcements);
     }, []);
 
     return (
