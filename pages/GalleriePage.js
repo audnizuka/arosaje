@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, ScrollView, StyleSheet } from 'react-native';
 
+
 const GalleriePage = () => {
   const [imageUrls, setImageUrls] = useState([]);
 

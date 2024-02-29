@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   picker: {
-    flex: 1,
+    flex: 0.35,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
   },

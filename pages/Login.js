@@ -21,9 +21,9 @@ const LoginScreen = ({ navigation }) => {
         }),
       })
       const data = await response.json();
-      await SecureStore.setItemAsync('token', data.token);
+      SecureStore.setItem('token', data.token);
       const payload = decodeToken(data.token);
-      await SecureStore.setItemAsync('userId', payload.id.toString());
+      SecureStore.setItem('userId', payload.id.toString());
       navigation.navigate('Home');
     } catch (error) {
       console.error(error);

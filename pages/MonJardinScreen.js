@@ -84,6 +84,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
 import { Cloudinary } from "@cloudinary/url-gen";
 
+
 const AddPlantScreen = ({ navigation }) => {
   const [plantName, setPlantName] = useState('');
   const [plantType, setPlantType] = useState('');
